@@ -5,7 +5,6 @@ brews=(
   autoenv
   aws-shell
   bash
-  brew-cask
   clib
   dfc
   git
@@ -20,10 +19,8 @@ brews=(
   ncdu
   nmap
   node
-  poppler
   postgresql
   pgcli
-  php71
   scala
   sbt
   stormssh
@@ -36,13 +33,12 @@ brews=(
 
 casks=(
   adobe-reader
-  asepsis
   atom
   betterzipql
   cakebrew
   cleanmymac
   commander-one
-  dockertoolbox
+  docker-toolbox
   dropbox
   firefox
   google-chrome
@@ -85,8 +81,6 @@ gems=(
 
 npms=(
   gulp
-  n
-  nuclide-installer
 )
 
 clibs=(
@@ -113,8 +107,6 @@ git_configs=(
 
 apms=(
   atom-beautify
-  circle-ci
-  ensime
   file-icons
   language-pug
   linter-erb
@@ -129,6 +121,7 @@ apms=(
   linter-scss-lint
   linter-twig
   minimap
+  nuclide
   pigments
 )
 
@@ -202,6 +195,16 @@ echo 'source /usr/local/share/chruby/chruby.sh' >> ~/.bash_profile
 echo 'source /usr/local/share/chruby/chruby.sh' >> ~/.zshrc
 chruby ruby-2.3.0
 ruby -v
+
+echo "Installing PHP..."
+# TODO make this work
+(cd ~; git clone https://github.com/phpenv/phpenv.git .phpenv)
+echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> ~/.bash_profile
+echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(phpenv init -)"' >> ~/.bash_profile
+echo 'eval "$(phpenv init -)"' >> ~/.zshrc
+phpenv rehash
+phpenv install
 
 echo "Installing Java ..."
 brew cask install java
