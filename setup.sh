@@ -2,31 +2,18 @@
 
 brews=(
   android-platform-tools
-  archey
+  autoenv
   aws-shell
   bash
   brew-cask
-  cheat
   clib
-  coreutils
   dfc
-  findutils
-  fontconfig --universal
-  fpp
-  fzf
   git
   git-extras
-  gnuplot --with-qt
-  go
-  gpg
-  hh
-  htop
-  httpie
   iftop
   imagemagick
   lighttpd
   lnav
-  lumen
   mackup
   macvim
   mtr
@@ -36,8 +23,7 @@ brews=(
   poppler
   postgresql
   pgcli
-  python
-  python3
+  php71
   scala
   sbt
   stormssh
@@ -50,27 +36,20 @@ brews=(
 
 casks=(
   adobe-reader
-  airdroid
   asepsis
   atom
   betterzipql
   cakebrew
-  chromecast
   cleanmymac
   commander-one
-  datagrip
   dockertoolbox
   dropbox
   firefox
-  franz
   google-chrome
-  google-drive
   github-desktop
   hosts
   handbrake
-  intellij-idea
   istat-menus
-  istat-server
   licecap
   iterm2
   qlcolorcode
@@ -80,44 +59,34 @@ casks=(
   quicklook-csv
   launchrocket
   microsoft-office
-  plex-home-theater
-  plex-media-server
   private-eye
-  satellite-eyes
-  sidekick
-  skype
   slack
-  spotify
-  steam
+  sublime-text
   teleport
   transmission
   transmission-remote-gui
   tunnelbear
   vlc
   volumemixer
-  webstorm
   xquartz
 )
 
 pips=(
-  glances
-  ohmu
-  pythonpy
+  pylint
+  virtualenv
+  virtualenvwrapper
 )
 
 gems=(
   bundle
+  github-pages
+  scss_lint
 )
 
 npms=(
-  coffee-script
-  fenix-cli
-  gitjk
-  kill-tabs
+  gulp
   n
   nuclide-installer
-  speed-test
-  wifi-password
 )
 
 clibs=(
@@ -132,36 +101,41 @@ git_configs=(
   "color.ui auto"
   "core.autocrlf input"
   "core.pager cat"
-  "credential.helper osxkeychain"
   "merge.ff false"
   "pull.rebase true"
   "push.default simple"
   "rebase.autostash true"
   "rerere.autoUpdate true"
   "rerere.enabled true"
-  "user.name pathikrit"
-  "user.email pathikritbhowmick@msn.com"
+  "user.name tvanantwerp"
+  "user.email tom@tomvanantwerp.com"
 )
-gpg_key='3E219504'
 
 apms=(
   atom-beautify
   circle-ci
   ensime
-  intellij-idea-keymap
-  language-scala
+  file-icons
+  language-pug
+  linter-erb
+  linter-jscs
+  linter-jshint
+  linter-jsonlint
+  linter-htmlhint
+  linter-markdown
+  linter-php
+  linter-pug
+  linter-pylint
+  linter-scss-lint
+  linter-twig
   minimap
+  pigments
 )
 
 fonts=(
   font-source-code-pro
 )
 
-omfs=(
-  jacaetevha
-  osx
-  thefuck
-)
 
 ######################################## End of app list ########################################
 set +e
@@ -180,6 +154,8 @@ else
 fi
 brew doctor
 brew tap homebrew/dupes
+brew tap homebrew/versions
+brew tap homebrew/homebrew-php
 
 fails=()
 
@@ -205,9 +181,25 @@ function install {
   done
 }
 
+echo "Installing oh-my-zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+(cd ~/.oh-my-zsh/themes/; curl https://raw.githubusercontent.com/carloscuesta/materialshell/master/osx/iterm/materialshell-ocean.itermcolors)
+sed -i '.bak' 's/^ZSH_THEME=.*/ZSH_THEME="materialshelloceanic"/g' ~/.zshrc
+
+echo "Installing python..."
+brew install pyenv
+echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+source ${HOME}/.pyenv
+pyenv install 3.5.2
+pyenv install 2.7.12
+pyenv global 3.5.2
+
 echo "Installing ruby ..."
 brew install ruby-install chruby
 ruby-install ruby
+echo 'source /usr/local/share/chruby/chruby.sh' >> ~/.bash_profile
+echo 'source /usr/local/share/chruby/chruby.sh' >> ~/.zshrc
 chruby ruby-2.3.0
 ruby -v
 
@@ -226,15 +218,24 @@ echo "Installing software ..."
 brew cask info ${casks[@]}
 install 'brew cask install --appdir=/Applications' ${casks[@]}
 
-echo "Installing secondary packages ..."
-# TODO: add info part of install or do reinstall?
+echo "Installing fonts..."
+install 'brew cask install' ${fonts[@]}
+
+echo "Installing python packages..."
 install 'pip install --upgrade' ${pips[@]}
+
+echo "Installing ruby gems..."
 install 'gem install' ${gems[@]}
+
+echo "Installing secondary packages..."
 install 'clib install' ${clibs[@]}
 install 'bpkg install' ${bpkgs[@]}
+
+echo "Installing node packages..."
 install 'npm install --global' ${npms[@]}
+
+echo "Installing Atom packages..."
 install 'apm install' ${apms[@]}
-install 'brew cask install' ${fonts[@]}
 
 echo "Upgrading bash ..."
 sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
@@ -246,13 +247,6 @@ for config in "${git_configs[@]}"
 do
   git config --global ${config}
 done
-gpg --keyserver hkp://pgp.mit.edu --recv ${gpg_key}
-git config --global user.signingkey ${gpg_key}
-
-echo "Setting up go ..."
-mkdir -p /usr/libs/go
-echo "export GOPATH=/usr/libs/go" >> ~/.bashrc
-echo "export PATH=$PATH:$GOPATH/bin" >> ~/.bashrc
 
 echo "Upgrading ..."
 pip install --upgrade setuptools
