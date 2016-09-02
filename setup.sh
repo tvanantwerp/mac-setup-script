@@ -198,13 +198,20 @@ ruby -v
 
 echo "Installing PHP..."
 # TODO make this work
-(cd ~; git clone https://github.com/phpenv/phpenv.git .phpenv)
-echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> ~/.bash_profile
-echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> ~/.zshrc
-echo 'eval "$(phpenv init -)"' >> ~/.bash_profile
-echo 'eval "$(phpenv init -)"' >> ~/.zshrc
-phpenv rehash
-phpenv install
+curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+chmod +x phpbrew
+sudo mv phpbrew /usr/bin/phpbrew
+echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bashrc
+echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bash_profile
+echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.zshrc
+source ~/.phpbrew/bashrc
+phpbrew --debug install --stdout 7.1 as 7.1-dev +default +intl
+phpbrew switch 7.1-dev
+phpbrew --debug ext install xdebug 2.4.0
+phpbrew --debug ext install github:krakjoe/apcu
+phpbrew --debug ext install github:php-memcached-dev/php-memcached php7 -- --disable-memcached-sasl
+phpbrew --debug ext install github:phpredis/phpredis php7
+phpbrew install 5.6 as 5.6-dev like 7.0-dev
 
 echo "Installing Java ..."
 brew cask install java
