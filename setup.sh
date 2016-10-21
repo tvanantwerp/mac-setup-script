@@ -38,6 +38,7 @@ casks=(
   cakebrew
   cleanmymac
   commander-one
+  cyberduck
   docker-toolbox
   dropbox
   firefox
