@@ -29,8 +29,11 @@ casks=(
   licecap
   iterm2
   qlcolorcode
+  qlimagesize
   qlmarkdown
   qlstephen
+  qlvideo
+  quicklookase
   quicklook-json
   quicklook-csv
   microsoft-office
@@ -38,6 +41,7 @@ casks=(
   sublime-text
   visual-studio-code
   vlc
+  webpquicklook
   xquartz
 )
 
@@ -57,7 +61,20 @@ git_configs=(
 )
 
 code_extensions=(
-
+  "ms-vscode.sublime-keybindings"
+  "ms-python.python"
+  "ms-vscode.cpptools"
+  "dbaeumer.vscode-eslint"
+  "PKief.material-icon-theme"
+  "ms-vscode.csharp"
+  "zhuangtongfa.material-theme"
+  "PeterJausovec.vscode-docker"
+  "felixfbecker.php-intellisense"
+  "ms-vscode.powershell"
+  "CoenraadS.bracket-pair-colorizer"
+  "vsmobile.vscode-react-native"
+  "Equinusocio.vsc-material-theme"
+  "rebornix.ruby"
 )
 
 fonts=(
@@ -94,9 +111,9 @@ function print_red {
 }
 
 function install {
-  cmd=$1
-  shift
-  for pkg in $@;
+  cmd=$1 # the install command is the first arg
+  shift # move to the second arg
+  for pkg in $@; # all remaining args are things to install
   do
     exec="$cmd $pkg"
     echo "Executing: $exec"
@@ -111,8 +128,9 @@ function install {
 
 echo "Installing oh-my-zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-(cd ~/.oh-my-zsh/themes/; curl https://raw.githubusercontent.com/carloscuesta/materialshell/master/osx/iterm/materialshell-ocean.itermcolors)
-sed -i '.bak' 's/^ZSH_THEME=.*/ZSH_THEME="materialshelloceanic"/g' ~/.zshrc
+(cd ~/.oh-my-zsh/custom/themes/; curl -o powerlevel9k.zip https://codeload.github.com/bhilburn/powerlevel9k/zip/master; unzip powerlevel9k.zip; mv powerlevel9k-master powerlevel9k; rm powerlevel9k.zip)
+sed -i '.bak' 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel9k/powerlevel9k"/g' ~/.zshrc
+
 
 echo "Installing python..."
 brew install pyenv
@@ -153,6 +171,9 @@ for config in "${git_configs[@]}"
 do
   git config --global ${config}
 done
+
+echo "Installing VS Code extensions..."
+install 'code --install-extension' ${code_extensions[@]}
 
 echo "Cleaning up ..."
 brew cleanup
