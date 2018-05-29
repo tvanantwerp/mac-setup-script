@@ -181,7 +181,6 @@ install 'code --install-extension' ${code_extensions[@]}
 echo "Cleaning up ..."
 brew cleanup
 brew cask cleanup
-brew linkapps
 
 for fail in ${fails[@]}
 do
