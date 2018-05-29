@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 brews=(
-  android-platform-tools
   autoenv
   aws-shell
   bash
@@ -35,6 +34,7 @@ brews=(
 casks=(
   adobe-reader
   alfred
+  android-platform-tools
   atom
   betterzipql
   cakebrew
