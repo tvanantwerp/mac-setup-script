@@ -78,7 +78,10 @@ code_extensions=(
 )
 
 fonts=(
-  font-source-code-pro
+  font-anonymouspro-nerd-font
+  font-droidsansmono-nerd-font
+  font-firacode-nerd-font
+  font-sourcecodepro-nerd-font
 )
 
 
