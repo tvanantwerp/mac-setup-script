@@ -28,11 +28,13 @@ brews=(
   tmux
   tree
   trash
+  yarn
   wget
 )
 
 casks=(
   adobe-reader
+  alfred
   atom
   betterzipql
   cakebrew
@@ -43,7 +45,7 @@ casks=(
   dropbox
   firefox
   google-chrome
-  github-desktop
+  gitkraken
   hosts
   handbrake
   istat-menus
@@ -54,15 +56,10 @@ casks=(
   qlstephen
   quicklook-json
   quicklook-csv
-  launchrocket
   microsoft-office
-  private-eye
   slack
   sublime-text
-  teleport
-  transmission
-  transmission-remote-gui
-  tunnelbear
+  visual-studio-code
   vlc
   volumemixer
   xquartz
@@ -81,7 +78,9 @@ gems=(
 )
 
 npms=(
+  eslint
   gulp
+  vtop
 )
 
 clibs=(
@@ -185,34 +184,33 @@ brew install pyenv
 echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 source ${HOME}/.pyenv
-pyenv install 3.5.2
-pyenv install 2.7.12
-pyenv global 3.5.2
+pyenv install 3.6.5
+pyenv install 2.7.15
 
 echo "Installing ruby ..."
 brew install ruby-install chruby
 ruby-install ruby
 echo 'source /usr/local/share/chruby/chruby.sh' >> ~/.bash_profile
 echo 'source /usr/local/share/chruby/chruby.sh' >> ~/.zshrc
-chruby ruby-2.3.0
+chruby ruby-2.5.1
 ruby -v
 
-echo "Installing PHP..."
+# echo "Installing PHP..."
 # TODO make this work
-curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
-chmod +x phpbrew
-sudo mv phpbrew /usr/bin/phpbrew
-echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bashrc
-echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bash_profile
-echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.zshrc
-source ~/.phpbrew/bashrc
-phpbrew --debug install --stdout 7.1 as 7.1-dev +default +intl
-phpbrew switch 7.1-dev
-phpbrew --debug ext install xdebug 2.4.0
-phpbrew --debug ext install github:krakjoe/apcu
-phpbrew --debug ext install github:php-memcached-dev/php-memcached php7 -- --disable-memcached-sasl
-phpbrew --debug ext install github:phpredis/phpredis php7
-phpbrew install 5.6 as 5.6-dev like 7.0-dev
+# curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+# chmod +x phpbrew
+# sudo mv phpbrew /usr/bin/phpbrew
+# echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bashrc
+# echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bash_profile
+# echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.zshrc
+# source ~/.phpbrew/bashrc
+# phpbrew --debug install --stdout 7.1 as 7.1-dev +default +intl
+# phpbrew switch 7.1-dev
+# phpbrew --debug ext install xdebug 2.4.0
+# phpbrew --debug ext install github:krakjoe/apcu
+# phpbrew --debug ext install github:php-memcached-dev/php-memcached php7 -- --disable-memcached-sasl
+# phpbrew --debug ext install github:phpredis/phpredis php7
+# phpbrew install 5.6 as 5.6-dev like 7.0-dev
 
 echo "Installing Java ..."
 brew cask install java
@@ -243,10 +241,10 @@ install 'clib install' ${clibs[@]}
 install 'bpkg install' ${bpkgs[@]}
 
 echo "Installing node packages..."
-install 'npm install --global' ${npms[@]}
+install 'yarn global add' ${npms[@]}
 
-echo "Installing Atom packages..."
-install 'apm install' ${apms[@]}
+# echo "Installing Atom packages..."
+# install 'apm install' ${apms[@]}
 
 echo "Upgrading bash ..."
 sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
