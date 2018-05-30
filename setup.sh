@@ -187,12 +187,12 @@ echo "Cleaning up ..."
 brew cleanup
 brew cask cleanup
 
+read -p "Hit enter to run [OSX for Hackers] script..." c
+sh -c "$(curl -sL https://gist.githubusercontent.com/brandonb927/3195465/raw/osx-for-hackers.sh)"
+
 for fail in ${fails[@]}
 do
   echo "Failed to install: $fail"
 done
-
-read -p "Hit enter to run [OSX for Hackers] script..." c
-sh -c "$(curl -sL https://gist.githubusercontent.com/brandonb927/3195465/raw/osx-for-hackers.sh)"
 
 echo "Done!"
