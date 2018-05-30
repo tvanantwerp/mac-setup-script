@@ -13,8 +13,8 @@ brews=(
   stormssh
   tmux
   tree
-  yarn
   wget
+  yarn
 )
 
 casks=(
@@ -24,19 +24,19 @@ casks=(
   docker
   dropbox
   firefox
-  google-chrome
   gitkraken
-  licecap
+  google-chrome
   iterm2
+  licecap
+  microsoft-office
   qlcolorcode
   qlimagesize
   qlmarkdown
   qlstephen
   qlvideo
-  quicklookase
-  quicklook-json
   quicklook-csv
-  microsoft-office
+  quicklook-json
+  quicklookase
   slack
   sublime-text
   visual-studio-code
@@ -61,20 +61,25 @@ git_configs=(
 )
 
 code_extensions=(
-  "ms-vscode.sublime-keybindings"
+  "aaron-bond.better-comments"
+  "CoenraadS.bracket-pair-colorizer"
+  "dbaeumer.vscode-eslint"
+  "dsznajder.es7-react-js-snippets"
+  "Equinusocio.vsc-material-theme"
+  "felixfbecker.php-intellisense"
+  "formulahendry.auto-rename-tag"
   "ms-python.python"
   "ms-vscode.cpptools"
-  "dbaeumer.vscode-eslint"
-  "PKief.material-icon-theme"
   "ms-vscode.csharp"
-  "zhuangtongfa.material-theme"
-  "PeterJausovec.vscode-docker"
-  "felixfbecker.php-intellisense"
   "ms-vscode.powershell"
-  "CoenraadS.bracket-pair-colorizer"
-  "vsmobile.vscode-react-native"
-  "Equinusocio.vsc-material-theme"
+  "ms-vscode.sublime-keybindings"
+  "PeterJausovec.vscode-docker"
+  "PKief.material-icon-theme"
+  "pnp.polacode"
   "rebornix.ruby"
+  "vsmobile.vscode-react-native"
+  "wix.vscode-import-cost"
+  "zhuangtongfa.material-theme"
 )
 
 fonts=(
